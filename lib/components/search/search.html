@@ -1,0 +1,109 @@
+<div class="main-panel">
+    <div class="search-container">
+        <h1>{{model.header}}</h1>
+        <div class="container center">
+            <form (ngSubmit)="getRecipe(url.value);">
+
+                <textarea #url (keyup)="keyUpInput($event)" (keydown)="keyDownInput($event)" placeholder="{{model.placeholder}}" [(ngModel)]="model.currentUrl"></textarea>
+
+                <p class="example">{{model.example}}</p>
+
+                <select [(ngModel)]="model.type">
+                    <option *ngFor="let t of model.types" [value]="t">{{t}}</option>
+                </select>
+
+                <button type="submit">{{model.convert}}</button>
+                <button *ngIf="model.debug == true" (click)="test();">Test</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="search-results">
+    <div class="container">
+        <div *ngFor="let recipe of model.recipes" class="recipe">
+
+            <div class="col-md-12">
+                <h2>{{recipe.title}}</h2>
+                <a href="{{recipe.url}}" target="_blank">{{recipe.url}}</a>
+
+                <div *ngIf="model.debug == true">
+                    {{recipe.findMethod}}
+                    <span *ngIf="recipe.amount != null">
+                        {{recipe.amount.number}}, {{recipe.amount.type}}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div *ngIf="recipe.recipeParts.length == 0">
+                    <h4>{{model.parseError}}</h4>
+                </div>
+
+                <h3 *ngIf="recipe.recipeParts.length > 0">Orginal</h3>
+                <ul class="recipe-part" *ngIf="recipe.recipeParts.length > 0">
+                    <li *ngFor="let recipePart of recipe.recipeParts">
+                        <strong>{{recipePart.name}}</strong>
+
+                        <ul class="ingredients">
+                            <li *ngFor="let ingredient of recipePart.ingredients">
+                                <span class="original" [innerHTML]="ingredient.textWithParts()"></span>
+
+                                <span *ngIf="model.debug == true">
+                                    ({{ingredient.groupName}})
+
+                                    <span class="parts">
+                                        <span [ngClass]="setClasses(part)" *ngFor="let part of ingredient.parts">
+                                            {{ part.text }}
+                                        </span>
+                                    </span>
+                                </span>
+                                <input class="suggestion" data-ingredient="" placeholder="Förslag på omvandling" type="text" />
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-6" *ngIf="recipe.recipeParts.length > 0">
+                <h3>{{model.converted}}</h3>
+                <ul class="recipe-part" *ngIf="recipe.hasReplacements()">
+                    <li *ngFor="let recipePart of recipe.recipeParts">
+                        <strong>{{recipePart.name}}</strong>
+
+                        <ul class="ingredients">
+                            <li [ngClass]="setIngredientClasses(ingredient)" *ngFor="let ingredient of recipePart.ingredients">
+                                <span>{{ingredient.text}}</span>
+
+                                <span *ngIf="model.debug == true">
+                                    ({{ingredient.groupName}})
+
+                                    <span class="parts">
+                                        <span [ngClass]="setClasses(part)" *ngFor="let part of ingredient.parts">
+                                            {{ part.text }}
+                                        </span>
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li *ngFor="let ingredient of recipe.getIngredientsWithReplacements()">
+                        <div *ngFor="let recipe of ingredient.replacements">
+                            <strong>{{recipe.title}} (istället för <i>{{ingredient.text}}</i>)</strong>
+                            <ul class="ingredients" *ngFor="let recipePart of recipe.recipeParts">
+                                <li *ngFor="let replacementIngredient of recipePart.ingredients">
+                                    {{replacementIngredient.text}}
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+
+                <div *ngIf="!recipe.hasReplacements()">
+                    <h4>Lyckades inte ersätta några ingredienser</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

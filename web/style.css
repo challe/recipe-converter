@@ -1,0 +1,140 @@
+body {
+    background: #F5F3EE;
+    color: #444;
+    font-size:20px;
+}
+h1 {
+    font-family: "Roboto", "Arial", sans-serif;
+}
+button, select {
+    padding: 10px;
+}
+select {
+    width: 100px;
+    border: none;
+    border-radius: 3px;
+}
+
+.search-container {
+    padding: 100px 0 70px 0;
+}
+.page {
+    margin-top: 35px;
+}
+button {
+    background-color: white;
+    border: none;
+    border-radius: 3px;
+    margin-top: 3px !important;
+    padding: 9px 20px;
+}
+
+.search-results {
+    background-color: #FDFFE9;
+}
+.recipe {
+    margin-bottom: 40px;
+    padding: 20px;
+}
+.recipe ul {
+    list-style-type: none;
+    padding: 0;
+}
+ul.recipe-part {
+    margin-top: 20px;
+}
+ul.ingredients {
+    margin: 3px 0 20px 0;
+}
+span.replacement {
+    background-color: #51E43D;
+}
+span.part, span.replacement {
+    padding: 0px 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 5px;
+}
+span.part.measurement {
+    background-color: #62D662;
+}
+span.part.type {
+    background-color: red;
+}
+span.part.foodstuff {
+    background-color: darkblue;
+}
+.replaced {
+    text-decoration: line-through;
+    color: #bbb;
+    font-style: italic;
+}
+
+.main-panel {
+    background: #0084c5;
+    background: -moz-linear-gradient(45deg,#0084c5 0,#0489c3 36%,#30cabf 66%,#2fbcb2 100%);
+    background: -webkit-gradient(linear,left bottom,right top,color-stop(0,#0084c5),color-stop(36%,#0489c3),color-stop(66%,#30cabf),color-stop(100%,#2fbcb2));
+    background: -webkit-linear-gradient(45deg,#0084c5 0,#0489c3 36%,#30cabf 66%,#2fbcb2 100%);
+    background: -o-linear-gradient(45deg,#0084c5 0,#0489c3 36%,#30cabf 66%,#2fbcb2 100%);
+    background: -ms-linear-gradient(45deg,#0084c5 0,#0489c3 36%,#30cabf 66%,#2fbcb2 100%);
+    background: linear-gradient(45deg,#0084c5 0,#0489c3 36%,#30cabf 66%,#2fbcb2 100%);
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0084c5',endColorstr='#2fbcb2',GradientType=1);
+    min-height: 65px;
+}
+.main-panel h1 {
+    text-align: center;
+    color: white;
+    margin: 0 0 40px 0;
+    font-family: 'Suez One', serif;
+    font-size: 51px;
+}
+.center { text-align: center; }
+
+.example {
+    color: white;
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 7px;
+}
+
+textarea {
+    resize: none;
+    border: 1px solid rgb(210, 210, 210);
+    border-radius: 3px;
+    width: 500px;
+    padding: 10px;
+    height: 42px;
+    max-height: 200px;
+}
+
+ul.nav {
+    padding: 20px 0;
+    color: white;
+    font-family: 'Suez One', serif;
+    font-size: 17px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+span.foodstuff:hover {
+    cursor: pointer;
+    border-bottom: 1px dashed #676767;
+    text-decoration: none;
+}
+.nav .right {
+    float: right;
+    margin: 0 30px;
+    cursor: pointer;
+}
+.nav .left {
+    float: left;
+}
+.suggestion {
+    display: none;
+    padding: 0 3px;
+    margin: 1px 0 5px 0;
+}
