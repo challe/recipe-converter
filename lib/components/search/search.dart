@@ -3,11 +3,12 @@ import 'dart:async';
 
 import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
-import "package:converter/locale/translated_component.dart";
 
+import "package:converter/locale/translated_component.dart";
 import 'package:converter/services/recipe_service.dart';
 import '../../models/models.dart';
 import '../../parser/parser.dart';
+import '../../config/config.dart';
 
 @Component(
     selector: 'search',
@@ -20,7 +21,7 @@ class SearchComponent extends TranslatedComponent implements OnInit {
   Search model = new Search();
 
   SearchComponent(this._pageService, this._routeParams) {
-    model.types = Parser.getConversionTypes();
+    model.types = ConfigHelper.getReplacementTypes();
 
     model.header = text("Convert recipes", "header");
     model.convert = text("Convert", "convertButton");
