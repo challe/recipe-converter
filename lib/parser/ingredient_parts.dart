@@ -85,8 +85,6 @@ List<IngredientPart> getMeasurementParts(Ingredient ingredient) {
 
   List<IngredientPart> measurements = new List<IngredientPart>();
 
-  // TODO: Make sure it handles "25-30 st hasselnötter"
-  // http://www.jennysmatblogg.nu/2016/02/04/kripsiga-kramiga-nutellapraliner/
   String regex = r"((ev\.\s|ca\s|à\s)*[\d\½\¾]+[\,\-\.]*[\d\½\¾]*)";
   regex += "(";
   config["measurements"].forEach((text) {
@@ -100,8 +98,6 @@ List<IngredientPart> getMeasurementParts(Ingredient ingredient) {
   });
   regex = regex.substring(0, regex.length - 1);
   regex += ")*";
-
-  window.console.log(regex);
 
   RegExp regexp = new RegExp(regex);
   Iterable<Match> matches = regexp.allMatches(ingredient.text.toLowerCase());
