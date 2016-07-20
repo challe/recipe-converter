@@ -34,6 +34,7 @@ class SearchComponent extends TranslatedComponent implements OnInit {
         "placeholder");
     model.parseError =
         text("Could not fetch ingredients for this adress", "parseError");
+    model.howDoesItWork = text("How does it work?", "howDoesItWork");
   }
 
   ngOnInit() async {

@@ -24,3 +24,7 @@ String placeholder() => Intl.message(
 String parseError() =>
     Intl.message("Could not fetch ingredients for this adress",
         name: "parseError", args: [], desc: "");
+
+String howDoesItWork() =>
+    Intl.message("How does it work?",
+        name: "howDoesItWork", args: [], desc: "");

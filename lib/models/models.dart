@@ -9,3 +9,4 @@ part 'ingredient_part.dart';
 part 'recipe_part.dart';
 part 'amount.dart';
 part 'search.dart';
+part 'app.dart';

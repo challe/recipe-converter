@@ -15,7 +15,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => {
-        "header": MessageLookupByLibrary.simpleMessage("Omvandlar recept"),
+        "header": MessageLookupByLibrary.simpleMessage("Omvandla recept"),
         "convertButton": MessageLookupByLibrary.simpleMessage("Omvandla"),
         "example": MessageLookupByLibrary.simpleMessage(
             "Exempel: http://www.recepten.se/recept/pasta_carbonara.html"),
@@ -23,6 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "placeholder": MessageLookupByLibrary.simpleMessage(
             "Klistra in en länk, en lista med ingredienser, eller skriv in egen lista!"),
         "parseError": MessageLookupByLibrary
-            .simpleMessage("Lyckades inte hämta ingredienser för denna adress")
+            .simpleMessage("Lyckades inte hämta ingredienser för denna adress"),
+        "howDoesItWork": MessageLookupByLibrary
+            .simpleMessage("Hur fungerar det?")
       };
 }

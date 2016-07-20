@@ -9,6 +9,6 @@ class Search {
   bool testing = false;
   String type;
 
-  String header, convert, example, converted, placeholder;
+  String header, convert, example, converted, placeholder, howDoesItWork;
   String parseError;
 }

@@ -3,7 +3,11 @@ import 'dart:html';
 import 'package:angular2/core.dart';
 import 'package:angular2/router.dart';
 
+import "package:converter/locale/translated_component.dart";
 import 'package:converter/services/recipe_service.dart';
+
+import 'models/models.dart';
+
 import 'components/search/search.dart';
 import 'components/about/about.dart';
 import 'components/bookmarklet/bookmarklet.dart';
@@ -27,15 +31,11 @@ import 'components/bookmarklet/bookmarklet.dart';
       name: 'Bookmarklet',
       component: BookmarkletComponent)
 ])
-class AppComponent implements OnInit {
-  final Router _router;
-  AppComponent(this._router);
-  String header;
+class AppComponent extends TranslatedComponent {
+  App model = new App();
 
-  ngOnInit() {
-    //String url = _routeParams.get("url");
-    //window.console.info(url);
-
-    //_router.navigate(["/Search"]);
+  AppComponent() {
+    model.header = text("Convert recipes", "header");
+    model.howDoesItWork = text("How does it work?", "howDoesItWork");
   }
 }
