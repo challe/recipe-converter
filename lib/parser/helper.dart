@@ -43,10 +43,12 @@ return containsMeasurement;
 Element findClosestParent(Element element, String ancestorTagName) {
   Element parent = element.parent;
 
-  while (parent.tagName.toLowerCase() != ancestorTagName.toLowerCase()) {
-    parent = parent.parent;
-    if (parent == null) {
-      return null;
+  if(parent != null) {
+    while (parent.tagName.toLowerCase() != ancestorTagName.toLowerCase()) {
+      parent = parent.parent;
+      if (parent == null) {
+        return null;
+      }
     }
   }
 

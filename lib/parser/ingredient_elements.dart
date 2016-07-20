@@ -67,7 +67,6 @@ List<Element> getIngredientElementsFromContainers(Recipe recipe) {
   return ingredientElements;
 }
 
-// TODO: Make it handle http://www.jennysmatblogg.nu/2014/03/24/pasta-carbonara-2/
 List<Element> getIngredientElementsByText(Recipe recipe) {
   List<Element> ingredientElements = new List<Element>();
 
@@ -89,6 +88,40 @@ List<Element> getIngredientElementsByText(Recipe recipe) {
       ingredientElements.add(ingredientElement);
     });
   });
+
+
+  /* We have no <li>-elements containing measurements, look for other elements
+    This makes http://www.jennysmatblogg.nu/2014/03/24/pasta-carbonara-2/ work
+  */
+  if(ingredientElements.length == 0){
+    List<Element> paragraphs = recipe.document.querySelectorAll("article p");
+
+    for (Element paragraphElement in paragraphs) {
+      if (containsMeasurement(paragraphElement.text)) {
+        if (paragraphElement.children.length > 0) {
+          for (int i = paragraphElement.children.length - 1; i >= 0; i--) {
+            Element child = paragraphElement.children[i];
+            paragraphElement.children.remove(child);
+          }
+        }
+
+        List<String> ingredients = paragraphElement.text.split("\n");
+
+        ingredients.forEach((ingredientText) {
+          /* We know that this paragraph contains a measurement, but this
+            could be in a description of how to prepare the recipe. Filter
+            out the texts that are too long, these are probably not ingredients
+          */
+          if(ingredientText.length < 50) {
+            Element p = new ParagraphElement();
+            p.text = ingredientText;
+            ingredientElements.add(p);
+          }
+        });
+
+      }
+    }
+  }
 
   return ingredientElements;
 }

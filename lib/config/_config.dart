@@ -68,11 +68,12 @@ Map config = {
     {"id": 41, "sv": "stor"},
     {"id": 42, "sv": "små"},
     {"id": 43, "sv": "skivat"},
-    {"id": 44, "sv": "finhackad"},
-    {"id": 45, "sv": "frysta"},
-    {"id": 46, "sv": "hela"},
-    {"id": 47, "sv": "smält"},
-    {"id": 48, "sv": "skuren"}
+    {"id": 44, "sv": "finhackade"},
+    {"id": 45, "sv": "finhackad"},
+    {"id": 46, "sv": "frysta"},
+    {"id": 47, "sv": "hela"},
+    {"id": 48, "sv": "smält"},
+    {"id": 49, "sv": "skuren"}
   ],
   "measurements": [
     {"id": 1, "sv": "klyfta"},
