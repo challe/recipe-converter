@@ -142,7 +142,7 @@ class SearchComponent extends TranslatedComponent implements OnInit {
     String height = "";
 
     // We pasted a string that is longer than one row, without line breaks
-    if(text.length >= 60 && nrOfRows == 1) {
+    if(text.length >= 75 && nrOfRows == 1) {
       nrOfRows = (text.length/60).ceil();
     }
 
