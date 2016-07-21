@@ -23,3 +23,6 @@ doc/api/
 
 test/
 release
+api/config.php
+api/vendor/
+api/.htaccess
