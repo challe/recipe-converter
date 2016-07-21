@@ -2,7 +2,11 @@ part of parser;
 // https://pub.dartlang.org/packages/grinder
 
 class Parser {
-  static Future<Recipe> parseString(String input, String type) async {
+  DabasService _dabasService;
+
+  Parser(this._dabasService);
+
+  Future<Recipe> parseString(String input, String type) async {
     Recipe recipe = new Recipe();
     recipe.title = "Eget inskrivna ingredienser";
     List<String> inputRows = input.split("\n");
@@ -17,13 +21,15 @@ class Parser {
       recipePart.ingredients.forEach((ingredient) {
         ingredient.parts = getIngredientParts(ingredient);
         ingredient.replacements = getReplacements(ingredient.parts, type);
+
+        addNutrition(_dabasService, ingredient.parts);
       });
     });
 
     return recipe;
   }
 
-  static Future<Recipe> parseHTML(Recipe recipe, String type) async {
+  Future<Recipe> parseHTML(Recipe recipe, String type) async {
     DomParser domParser = new DomParser();
     if (recipe.html == "") return recipe;
 
@@ -41,6 +47,8 @@ class Parser {
         recipePart.ingredients.forEach((ingredient) {
           ingredient.parts = getIngredientParts(ingredient);
           ingredient.replacements = getReplacements(ingredient.parts, type);
+
+          addNutrition(_dabasService, ingredient.parts);
         });
       });
     }

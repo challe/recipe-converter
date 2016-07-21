@@ -5,9 +5,20 @@ List<IngredientPart> getIngredientParts(Ingredient ingredient) {
 
   ingredientParts.addAll(getMeasurementParts(ingredient));
   ingredientParts.addAll(getTypeParts(ingredient));
-  ingredientParts.addAll(getFoodstuffParts(ingredient.text, ingredientParts));
+
+  List<IngredientPart> foodstuff = getFoodstuffParts(ingredient.text, ingredientParts);
+  ingredientParts.addAll(foodstuff);
 
   return ingredientParts;
+}
+
+Future addNutrition(DabasService dabasService, List<IngredientPart> parts) async {
+  Future.forEach(parts, (IngredientPart foodstuff) async {
+    if (foodstuff.type == IngredientPartType.foodstuff) {
+      foodstuff.nutrition = new List<Nutrition>();
+      foodstuff.nutrition.add(await dabasService.getNutrition(foodstuff.text));
+    }
+  });
 }
 
 List<IngredientPart> getFoodstuffParts(
@@ -52,7 +63,7 @@ List<IngredientPart> getFoodstuffParts(
     String text =
     food.replaceAll(new RegExp(r"(^,)|(\(\))|,,|, ,|,|(,$)"), "");
     text = text.replaceAll(new RegExp(r'(\((or|ar)\))'), ' ');
-    text = text.replaceAll(new RegExp(r'\s+'), ' ');
+    text = text.replaceAll(new RegExp(r'\s+'), ' ').trim();
 
     foodstuff.add(new IngredientPart(IngredientPartType.foodstuff, text));
   });

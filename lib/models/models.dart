@@ -10,3 +10,4 @@ part 'recipe_part.dart';
 part 'amount.dart';
 part 'search.dart';
 part 'app.dart';
+part 'nutrition.dart';

@@ -6,6 +6,7 @@ import 'package:angular2/router.dart';
 
 import "package:converter/locale/translated_component.dart";
 import 'package:converter/services/recipe_service.dart';
+import 'package:converter/services/dabas_service.dart';
 import '../../models/models.dart';
 import '../../parser/parser.dart';
 import '../../config/config.dart';
@@ -13,14 +14,15 @@ import '../../config/config.dart';
 @Component(
     selector: 'search',
     templateUrl: 'search.html',
-    providers: const [RecipeService])
+    providers: const [RecipeService, DabasService])
 class SearchComponent extends TranslatedComponent implements OnInit {
   Storage localStorage = window.localStorage;
-  final RecipeService _pageService;
+  final RecipeService _recipeService;
+  final DabasService _dabasService;
   final RouteParams _routeParams;
   Search model = new Search();
 
-  SearchComponent(this._pageService, this._routeParams) {
+  SearchComponent(this._recipeService, this._dabasService, this._routeParams) {
     model.types = ConfigHelper.getReplacementTypes();
 
     model.header = text("Convert recipes", "header");
@@ -70,16 +72,14 @@ class SearchComponent extends TranslatedComponent implements OnInit {
 
         if (input.contains("http") || input.contains("www")) {
           isURL = true;
-          url = input;
-
-          if (!url.contains("http")) {
-            url = 'http://' + url;
-          }
+          url = (!input.contains("http")) ? 'http://' + input : input;
         }
 
+        Parser parser = new Parser(_dabasService);
+
         if (isURL) {
-          _pageService.getRecipe(url).then((recipe) {
-            Parser.parseHTML(recipe, model.type).then((recipe) {
+          _recipeService.getRecipe(url).then((recipe) {
+            parser.parseHTML(recipe, model.type).then((recipe) {
               model.currentUrl = url;
 
               if (window.location.href.contains('challe.se')) {
@@ -91,7 +91,7 @@ class SearchComponent extends TranslatedComponent implements OnInit {
             });
           });
         } else {
-          Parser.parseString(input, model.type).then((recipe) {
+          parser.parseString(input, model.type).then((recipe) {
             if (window.location.href.contains('challe.se')) {
               model.recipes = new List<Recipe>();
             }
@@ -178,7 +178,7 @@ class SearchComponent extends TranslatedComponent implements OnInit {
 
       String query = "pasta+carbonara+recept";
       String testURL = "https://www.bing.com/search?q=" + query;
-      List<String> urls = await _pageService.getRecipesToTest(testURL);
+      List<String> urls = await _recipeService.getRecipesToTest(testURL);
 
       Future.forEach(urls, (url) {
         this.getRecipe(url);

@@ -4,6 +4,7 @@ import "dart:html";
 import "dart:async";
 import "../models/models.dart";
 import '../config/config.dart';
+import '../services/dabas_service.dart';
 
 part "helper.dart";
 part "ingredient.dart";
