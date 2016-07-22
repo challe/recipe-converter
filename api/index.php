@@ -31,8 +31,27 @@ $app->get('/', function (Request $request, Response $response) {
     return json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG);
 });
 
-$app->get('/dabas/search/{ingredient}', function (Request $request, Response $response) use($dabasKey) {
-    $ingredient = $request->getAttribute('ingredient');
+$app->post('/dabas/search', function (Request $request, Response $response) {
+    set_time_limit(60);
+
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+
+    $result = [];
+    for($i = 0; $i < count($data); $i++) {
+        $text = $data[$i];
+
+        if (strpos($text, 'salt') == false && strpos($text, 'peppar') == false) {
+            array_push($result, getIngredientData($text));
+        }
+    }
+
+    return json_encode($result, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES);
+});
+
+function getIngredientData($ingredient) {
+    global $dabasKey;
+
     $ingredient = str_replace("+", "%20", urlencode($ingredient));
     $searchURL = "http://api.dabas.com/DABASService/V2/articles/searchparameter/" . $ingredient . "/JSON?apikey=" . $dabasKey;
 
@@ -71,8 +90,9 @@ $app->get('/dabas/search/{ingredient}', function (Request $request, Response $re
 
     $data = array("found" => $found, "name" => $name, "value" => $value, "unit" => $unit, "kolhydrater" => $kolhydrater);
 
-    return json_encode($data, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES);
-});
+    return $data;
+}
+
 
 $app->run();
 ?>

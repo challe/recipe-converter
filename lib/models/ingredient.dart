@@ -7,6 +7,21 @@ class Ingredient {
   List<IngredientPart> parts;
   List<Recipe> replacements;
 
+  String getCarbohydrates() {
+    String carbs = "";
+
+    this.parts.forEach((ingredientPart) {
+      if(ingredientPart.type == IngredientPartType.foodstuff &&
+          !this.text.contains("eller")) {
+        ingredientPart.nutrition.forEach((nutrition) {
+          carbs = nutrition.text();
+        });
+      }
+    });
+
+    return carbs;
+  }
+
   String textWithParts() {
     String text = this.text;
     List<String> alreadyParsed = new List<String>();
@@ -25,6 +40,8 @@ class Ingredient {
         alreadyParsed.add(ingredientPartText);
       }
     });
+
+    text += " (" + getCarbohydrates() + ")";
 
     return text;
   }

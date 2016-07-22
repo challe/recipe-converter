@@ -7,5 +7,7 @@ class IngredientPart {
   String text;
   List<Nutrition> nutrition;
 
-  IngredientPart(this.type, this.text);
+  IngredientPart(this.type, this.text) {
+    this.nutrition = new List<Nutrition>();
+  }
 }

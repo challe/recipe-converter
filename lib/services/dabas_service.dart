@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html';
+import 'dart:convert';
 
 import 'package:angular2/core.dart';
 import 'package:http/browser_client.dart';
@@ -19,13 +20,24 @@ class DabasService {
     }
   }
 
-  Future<Nutrition> getNutrition(String ingredient) async {
-    final response =
-        await _http.get(_url + "/" + Uri.encodeComponent(ingredient));
-    Nutrition nutrition = new Nutrition.fromJson(response.body);
+  Future addNutritionToFoodstuff(List<String> texts) async {
+    Completer c = new Completer();
+    String data = JSON.encode(texts);
 
-    window.console.log(response.body);
+    final response = await _http.post(_url, body: data);
+    String body = response.body;
+    var added = JSON.decode(body);
 
-    return nutrition;
+    List<IngredientPart> ingredientParts = new List<IngredientPart>();
+    added.forEach((nutrition) {
+      window.console.log(nutrition["name"]);
+      //ingredientParts.add(new IngredientPart())
+      //ingredientPart.nutrition = new List<Nutrition>();
+      //ingredientPart.nutrition.add(nutrition);
+    });
+
+    c.complete();
+
+    return c.future;
   }
 }

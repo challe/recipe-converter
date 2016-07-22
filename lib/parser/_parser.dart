@@ -17,16 +17,20 @@ class Parser {
     });
 
     recipe.recipeParts.add(new RecipePart("Ingredienser", ingredients));
+    addPartsAndReplacements(recipe, type);
+
+    return recipe;
+  }
+
+  void addPartsAndReplacements(Recipe recipe, String type) {
     recipe.recipeParts.forEach((recipePart) {
       recipePart.ingredients.forEach((ingredient) {
         ingredient.parts = getIngredientParts(ingredient);
         ingredient.replacements = getReplacements(ingredient.parts, type);
-
-        addNutrition(_dabasService, ingredient.parts);
       });
-    });
 
-    return recipe;
+      //addNutrition(_dabasService, recipePart.ingredients);
+    });
   }
 
   Future<Recipe> parseHTML(Recipe recipe, String type) async {
@@ -42,15 +46,7 @@ class Parser {
     if (ingredientElements.length > 0) {
       List<Ingredient> ingredients = getIngredients(ingredientElements);
       recipe.recipeParts = getRecipeParts(ingredients);
-
-      recipe.recipeParts.forEach((recipePart) {
-        recipePart.ingredients.forEach((ingredient) {
-          ingredient.parts = getIngredientParts(ingredient);
-          ingredient.replacements = getReplacements(ingredient.parts, type);
-
-          addNutrition(_dabasService, ingredient.parts);
-        });
-      });
+      addPartsAndReplacements(recipe, type);
     }
 
     return recipe;

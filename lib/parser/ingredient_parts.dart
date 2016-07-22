@@ -12,13 +12,19 @@ List<IngredientPart> getIngredientParts(Ingredient ingredient) {
   return ingredientParts;
 }
 
-Future addNutrition(DabasService dabasService, List<IngredientPart> parts) async {
-  Future.forEach(parts, (IngredientPart foodstuff) async {
-    if (foodstuff.type == IngredientPartType.foodstuff) {
-      foodstuff.nutrition = new List<Nutrition>();
-      foodstuff.nutrition.add(await dabasService.getNutrition(foodstuff.text));
-    }
+Future addNutrition(DabasService dabasService, List<Ingredient> ingredients) async {
+  List<String> texts = new List<String>();
+
+  ingredients.forEach((Ingredient ingredient) {
+    List<IngredientPart> foodstuff =
+    ingredient.parts.where((p) => p.type == IngredientPartType.foodstuff);
+
+    foodstuff.forEach((foodstuff) {
+      texts.add(foodstuff.text);
+    });
   });
+
+  return await dabasService.addNutritionToFoodstuff(texts);
 }
 
 List<IngredientPart> getFoodstuffParts(
