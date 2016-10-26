@@ -55,9 +55,4 @@ class RecipeService {
       //throw _handleError(e);
     }
   }
-
-  Exception _handleError(dynamic e) {
-    print(e); // log to console instead
-    return new Exception('Server error; cause: $e');
-  }
 }

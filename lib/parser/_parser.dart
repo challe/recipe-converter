@@ -1,5 +1,4 @@
 part of parser;
-// https://pub.dartlang.org/packages/grinder
 
 class Parser {
   DabasService _dabasService;

@@ -4,7 +4,6 @@ import 'dart:convert';
 
 import 'package:angular2/core.dart';
 import 'package:http/browser_client.dart';
-import '../models/models.dart';
 
 @Injectable()
 class DabasService {
@@ -28,7 +27,7 @@ class DabasService {
     String body = response.body;
     var added = JSON.decode(body);
 
-    List<IngredientPart> ingredientParts = new List<IngredientPart>();
+    // List<IngredientPart> ingredientParts = new List<IngredientPart>();
     added.forEach((nutrition) {
       window.console.log(nutrition["name"]);
       //ingredientParts.add(new IngredientPart())
